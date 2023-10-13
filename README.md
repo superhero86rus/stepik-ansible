@@ -16,3 +16,9 @@ sudo nano /etc/hosts
 ```bash
 sudo dnf install ansible
 ```
+
+### Запуск модуля ping
+```bash
+ansible target1 -m ping -i inventory
+ansible all -m ping -i inventory
+```
