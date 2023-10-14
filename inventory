@@ -1,3 +1,6 @@
+# ungrouped
+target-win ansible_host=192.168.8.107
+
 [linux]
 target1 ansible_host=192.168.8.105
 target2 ansible_host=192.168.8.106
@@ -7,7 +10,6 @@ ansible_ssh_pass=Pa$$w0rd
 
 [windows]
 win10 ansible_host=192.168.8.101 
-#target-win ansible_host=192.168.8.107
 wintar1 ansible_host=192.168.8.108
 [windows:vars]
 ansible_connection=winrm

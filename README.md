@@ -105,3 +105,26 @@ Set-NetFirewallRule -DisplayName "Общий доступ к файлам и п�
 ```bash
 ansible wintar1 -m win_chocolatey -i inventory -a "name=notepadplusplus state=present"
 ```
+
+### Playbooks
+```bash
+ansible-playbook ./playbooks/simple-playbook.yml -i inventory
+```
+
+### Плейбук или Роль?
+```bash
+# Выполнить команду
+ansible all -a "/sbin/reboot"
+
+# Выполнить модуль
+ansible all -m ping
+
+# Выполнить playbook
+ansible-playbook new-webserver.yml
+
+# Выполнить модуль на хостах, не входящих ни в какую группу в inventory файле
+ansible ungrouped -m win_ping -i inventory
+
+# Выяснить какая ОС на машинах
+ansible linux -i inventory -m shell -a "hostnamectl | grep \"Operating System\""
+```
