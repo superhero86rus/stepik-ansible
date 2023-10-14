@@ -6,7 +6,8 @@ ansible_connection=ssh
 ansible_ssh_pass=Pa$$w0rd
 
 [windows]
-wind10 ansible_host=192.168.8.101 
+win10 ansible_host=192.168.8.101 
+target-win ansible_host=192.168.8.107
 [windows:vars]
 ansible_connection=winrm
 ansible_user=ansible

@@ -1,6 +1,8 @@
 #### Ansible для начинающих + практический опыт
 ### https://stepik.org/course/123806/syllabus
 
+# Введение в Ansible
+
 ### На управляемых машинах меняем hostname
 ```bash
 # Задаем hostname ansibletarget1
@@ -73,4 +75,26 @@ employee:
         -
             month: august
             amount: 3400
+```
+
+# Основные понятия Ansible
+
+##### Основной inventory файл лежит в /etc/ansible/hosts в формате ini
+
+### Настройка Windows-машин (подробнее...)
+```powershell
+# Какой PS установлен
+$PSVersionTable
+
+# Какой .net установлен
+dir /windows/microsoft.net/framework/v*
+
+# Выполнить скрипты из каталога /config (WinRMSetup.ps1, ConfigureRemotingForAnsible.ps1, ConfigureRemotingUserForAnsible.ps1)
+
+# Посмотреть настройки winrm
+winrm get winrm/config
+
+set-item WSMan:\localhost\Service\AllowUnencrypted $True
+
+# Изменить свойства сетевого подключения и выбрать тип сети - Частная (вместо общедоступной)
 ```
