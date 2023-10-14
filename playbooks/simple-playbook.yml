@@ -5,10 +5,10 @@
     - name: Ping node
       ping:
 
-    - name: Execute command "date"
-      command: "uname -a"
-      register: current_date
+    - name: Get Current OS Info
+      command: "hostnamectl"
+      register: os_info
 
-    - name: Print date command result
+    - name: Print command result
       debug:
-        var: current_date.stdout_lines
+        var: os_info.stdout_lines
