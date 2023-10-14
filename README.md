@@ -52,3 +52,25 @@ config/WinRM/WinRMSetup.ps1, config/WinRM/ConfigureRemotingForAnsible.ps1
 sudo dnf install python3-pip
 pip3 install pywinrm
 ```
+
+### Пример YAML
+```yaml
+employee:
+    name: john
+    gender: male
+    age: 24
+    address:
+        city: edison
+        state: 'new jersey'
+        country: 'united states'
+    payslips:
+        -
+            month: june
+            amount: 1400
+        -
+            month: july
+            amount: 2400
+        -
+            month: august
+            amount: 3400
+```
