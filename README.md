@@ -96,5 +96,12 @@ winrm get winrm/config
 
 set-item WSMan:\localhost\Service\AllowUnencrypted $True
 
+Set-NetFirewallRule -DisplayName "Общий доступ к файлам и принтерам (эхо-запрос - входящий трафик ICMPv4)" -Enabled True
+
 # Изменить свойства сетевого подключения и выбрать тип сети - Частная (вместо общедоступной)
+```
+
+### Установка notepad++ через Ansible
+```bash
+ansible wintar1 -m win_chocolatey -i inventory -a "name=notepadplusplus state=present"
 ```
