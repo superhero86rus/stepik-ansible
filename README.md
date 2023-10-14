@@ -22,3 +22,27 @@ sudo dnf install ansible
 ansible target1 -m ping -i inventory
 ansible all -m ping -i inventory
 ```
+
+### Как в инвентарном файле использовать группу из групп
+```ini
+[web servers]
+web1
+web2
+web3
+
+[db_servers]
+db1
+
+[all_Servers:children]
+web_servers
+db_servers
+```
+
+### Управление Windows
+# Под админом, включить на хостах PS: Enable-PSRemoting -Force
+# Set-NetFirewallRule -DisplayName "Общий доступ к файлам и принтерам (эхо-запрос - входящий трафик ICMPv4)" -Enabled True
+# После этого windows машина начнет пинговаться
+```bash
+sudo dnf install python3-pip
+pip3 install pywinrm
+```

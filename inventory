@@ -1,2 +1,16 @@
-target1 ansible_host=192.168.8.105 ansible_ssh_pass=Pa$$w0rd
-target2 ansible_host=192.168.8.106 ansible_ssh_pass=Pa$$w0rd
+[linux]
+target1 ansible_host=192.168.8.105
+target2 ansible_host=192.168.8.106
+[linux:vars]
+ansible_connection=ssh
+ansible_ssh_pass=Pa$$w0rd
+
+[windows]
+wind10 ansible_host=192.168.8.101 
+[windows:vars]
+ansible_connection=winrm
+ansible_user=ansible
+ansible_password=ansible
+ansible_port=5986
+ansible_winrm_transport=basic
+ansible_winrm_server_cert_validation=ignore
