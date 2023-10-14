@@ -1,0 +1,14 @@
+-
+  name: Play1
+  hosts: linux
+  tasks:
+    - name: Ping node
+      ping:
+
+    - name: Execute command "date"
+      command: "uname -a"
+      register: current_date
+
+    - name: Print date command result
+      debug:
+        var: current_date.stdout_lines
