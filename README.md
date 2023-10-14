@@ -38,10 +38,16 @@ web_servers
 db_servers
 ```
 
-### Управление Windows
-# Под админом, включить на хостах PS: Enable-PSRemoting -Force
-# Set-NetFirewallRule -DisplayName "Общий доступ к файлам и принтерам (эхо-запрос - входящий трафик ICMPv4)" -Enabled True
-# После этого windows машина начнет пинговаться
+### Управление Windows через WinRM
+- Под админом, включить на хостах PS: Enable-PSRemoting -Force
+- Set-NetFirewallRule -DisplayName "Общий доступ к файлам и принтерам (эхо-запрос - входящий трафик ICMPv4)" -Enabled True
+- После этого windows машина начнет пинговаться, но доступа через ansible не будет
+- Нужно создать пользователя ansible и добавить его в группу Администраторы
+- Для настройки WinRM и доступности через Ansible выполняем последовательно:
+config/WinRM/WinRMSetup.ps1, config/WinRM/ConfigureRemotingForAnsible.ps1
+- Также, можно создать пользователя выполнив https://github.com/superhero86rus/ansible-windows/blob/master/files/ConfigureRemotingUserForAnsible.ps1
+
+### Установка модуля WinRM для Ansible на управляющую машину
 ```bash
 sudo dnf install python3-pip
 pip3 install pywinrm
