@@ -240,3 +240,24 @@ ansible-galaxy list
 ansible-galaxy install rotoro_cloud.mysql_role -p ./roles
 ```
 
+### Дополнительные темы
+```python
+
+# Паттерны для хостов
+host1, host2, host3
+group1, host1
+host*
+*.domain.com
+
+# Динамический inventory - это скрипт (python, NodeJS, php и другие языки, на которых мы формируем файл инвентаризации)
+# Статич. invemtory: ansible-playbook -i inventory playbook.yml
+# Динамич. inventory: ansible-playbook -i inventory.py playbook.yml
+# На выходе динамический inventory выдает сгенерированную структуру как в статическом inventory
+return {
+    'db': [server1.domain.com, server2.domain.com]
+    'app': [server3.domain.com, server4.domain.com]
+}
+
+# Custom module пишется на python
+# https://docs.ansible.com/ansible/latest/dev_guide/developing_modules_general.html
+```
