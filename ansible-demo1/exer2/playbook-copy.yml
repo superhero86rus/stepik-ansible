@@ -1,0 +1,10 @@
+-
+  name: Copy files to targets
+  hosts: all
+  tasks:
+    -  
+       name: "Copy files"
+       copy:
+        src: /home/superhero86/source/stepik-ansible/ansible-demo1/exer2/tmp/testfile.txt
+        dest: /tmp/testfile.txt
+        

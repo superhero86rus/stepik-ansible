@@ -1,0 +1,24 @@
+
+-
+  name: Install and configure MySQL
+  hosts: target3
+  become: yes
+  vars:
+    custom_repository: http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm
+  tasks:
+    - name: Prerequisites - MySQL repo
+      yum: name="{{custom_repository}}" state=present
+
+    - name: Install MySQL packages
+      yum: name="{{packages}}" state=present
+      vars:
+        packages:
+          - mysql-community-server
+          - mysql-community-client
+          - MySQL-python
+    
+    - name: Start MySQL service
+      service: name=mysqld state=started
+    
+    - name: Configure Database
+      mysql_db: name=testdb state=present

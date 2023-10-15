@@ -1,0 +1,22 @@
+---
+-
+  name: Create users
+  hosts: all
+  tasks:
+    -
+      user: name="{{item.name}}" state=present uid="{{item.uid}}"
+      loop:
+      # Можно также вместо loop использовать директиву with_items. Разницы нет
+        - name: Boris
+          uid: 1010
+        - name: Andrew
+          uid: 1011
+        - name: John
+          uid: 1012
+        - name: Mike
+          uid: 1013
+        - name: Tony
+          uid: 1014
+        - name: David
+          uid: 1015
+...
