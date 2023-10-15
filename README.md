@@ -128,3 +128,24 @@ ansible ungrouped -m win_ping -i inventory
 # Выяснить какая ОС на машинах
 ansible linux -i inventory -m shell -a "hostnamectl | grep \"Operating System\""
 ```
+
+### Модули
+- command: выполняет команду
+- script: выполняет скрипт, который лежит на управляющей машине (в процессе работы передает его на хосты)
+- service: управление службами
+- lineinfile: поиск строки в файле и ее замена, либо добавление если строки не было
+
+```yaml
+-
+    name: Add DNS Server to resolv.conf
+    hosts: localhost
+    tasks:
+        -   
+            name: Add new nameserver
+            lineinfile:
+                path: /etc/resolve.conf
+                line: "nameserver 10.1.250.10"
+
+# Скрипт-аналог (не идемпотентен):
+# echo "nameserver 10.1.250.10" > /etc/resolve.conf
+```
