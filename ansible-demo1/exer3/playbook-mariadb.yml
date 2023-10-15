@@ -1,0 +1,55 @@
+-
+  name: Install and Configure MySQL (Maria DB)
+  hosts: target3
+  become: yes
+  vars:
+    db_name: testdb
+    mysql_user_name: superhero86
+    mysql_user_password: Pa$$w0rd
+  tasks:
+    -  
+       name: Install PreReq Packages
+       vars:
+         packages:
+           - epel-release
+           - yum-utils
+           - python3
+           - MySQL-python
+       yum: name="{{ packages }}" state=present
+    -
+      name: Add Repository
+      yum_repository:
+        name: MariaDB
+        description: MariaDB Custom Repository
+        baseurl: http://yum.mariadb.org/10.5/centos7-amd64/
+        #gpgkey: https://yum.mariadb.org/RPM_GPG-KEY-MariaDB
+        gpgkey: https://supplychain.mariadb.com/MariaDB-Server-GPG-KEY
+        gpgcheck: yes
+        
+    -
+      name: Install MySQL Packages
+      vars:
+        packages:
+          - MariaDB-server
+          - MariaDB-client
+          - MySQL
+      yum: name="{{ packages }}" state=present
+
+    -
+      name: Start MySQL service
+      service: name=mariadb state=started
+
+    -
+      name: Configure Database
+      mysql_db: name="{{ db_name }}" state=present
+    
+    -
+      name: Create Database user
+      mysql_user:
+        name: "{{ mysql_user_name }}"
+        password: "{{ mysql_user_password }}"
+        priv: "{{ db_name }}.*:ALL"
+        state: present
+        
+
+        
