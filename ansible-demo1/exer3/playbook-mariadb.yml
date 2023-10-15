@@ -11,12 +11,12 @@
     -  
        name: Install PreReq Packages
        vars:
-         packages:
+         pre_packages:
            - epel-release
            - yum-utils
            - python3
            - MySQL-python
-       yum: name="{{ packages }}" state=present
+       yum: name="{{ pre_packages }}" state=present
     -
       name: Add Repository
       yum_repository:
@@ -30,11 +30,11 @@
     -
       name: Install MySQL Packages
       vars:
-        packages:
+        mysql_packages:
           - MariaDB-server
           - MariaDB-client
           - MySQL
-      yum: name="{{ packages }}" state=present
+      yum: name="{{ mysql_packages }}" state=present
 
     -
       name: Start MySQL service

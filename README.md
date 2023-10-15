@@ -134,6 +134,7 @@ ansible linux -i inventory -m shell -a "hostnamectl | grep \"Operating System\""
 - script: выполняет скрипт, который лежит на управляющей машине (в процессе работы передает его на хосты)
 - service: управление службами
 - lineinfile: поиск строки в файле и ее замена, либо добавление если строки не было
+- package: управление пакетами (в зависимости от ОС будет вызван yum, apt, dnf и тд)
 
 ```yaml
 -
@@ -143,9 +144,99 @@ ansible linux -i inventory -m shell -a "hostnamectl | grep \"Operating System\""
         -   
             name: Add new nameserver
             lineinfile:
-                path: /etc/resolve.conf
+                path: /etc/resolv.conf
                 line: "nameserver 10.1.250.10"
 
 # Скрипт-аналог (не идемпотентен):
-# echo "nameserver 10.1.250.10" > /etc/resolve.conf
+# echo "nameserver 10.1.250.10" > /etc/resolv.conf
 ```
+
+### Переменные
+#### Переменные могут быть объявлены во внешнем файле
+```yaml
+# Add DNS Server to resolv.conf
+-
+    name: Play vith vars
+    hosts: localhost  
+    vars_files:
+      # Так можно подключить внешний файл
+      - variables-web.yml
+    tasks:
+      - name: Add DNS Server
+        vars:
+          dns_server: 10.1.250.10
+          -  lineinfile:
+             path:  /etc/resolv.conf
+             # JINJA2 Templating
+             line: 'nameserver {{ dns_server }}'
+```
+
+### Циклы
+- Директива по умолчанию loop
+- with_items - тоже самое
+- with_file - перебор файлов
+- with_url - перебор ссылок
+- with_mongodb - подключение к нескольким БД mongodb
+- и таких директив очень много (lookup plugins)
+
+### Роли
+#### Как разделить playbooks на модули?
+```yaml
+# Использование директивы include чтобы разбить playbook на модули
+- include: install_depends.yml
+- include: config_server.yml
+
+# Таски объявлены в другом файле
+tasks:
+    - include: tasks.yml
+
+# Переменные объявлены в другом файле (vars_files вместо vars)
+vars_files:
+    - vars.yml
+```
+#### А как это сделать нормальным способом с помощью ролей?
+#### Структура роли (каталоги):
+- tasks - таски
+- vars - общие переменные
+- defaults - любые значения которые могут быть переопределены на уровне playbook
+- handlers - обработчики событий
+- templates - шаблоны используемые в playbook
+
+### Взять роль с Ansible galaxy
+```bash
+ansible-galaxy role install commissary.nginx
+
+# Скачать роль с GitHub
+git clone https://github.com/nginxinc/ansible-role-nginx.git
+```
+
+### Создать скелет роли c нуля
+```bash
+ansible-galaxy init mysql-role
+```
+#### Подключаем роль к playbook
+```yaml
+# По умолчанию роли хранятся либо в /etc/ansible/role, либо в каталоге проекта в каталоге roles
+# Изменить путь к ролям можно в /etc/ansible/ansible.cfg 
+- name: Install MySQL
+  hosts: db_servers
+  roles:
+    - mysql-role
+# Либо использовать массив словарей
+- name: Install MySQL
+  hosts: db_servers
+  roles:
+    - role: mysql-role
+      become: yes
+      mysql_user_name: venus # передаем дополнительный параметр
+```
+
+### Полезные команды с ролями
+```bash
+# Посмотреть подключенные роли
+ansible-galaxy list
+
+# Установить роль в заданный каналог
+ansible-galaxy install rotoro_cloud.mysql_role -p ./roles
+```
+

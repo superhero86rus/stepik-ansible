@@ -1,0 +1,13 @@
+---
+- name: Install and Configure MySQL (Maria DB) with Ansible Role
+  hosts: target3
+  become: yes
+
+  roles: 
+    - role: "mysql-role"
+      vars:
+        db_name: newtestdb
+      tags: prod
+
+# Можно запустить по тегу
+# ansible-playbook --tags prod playbook-mariadb-role.yml -i inventory

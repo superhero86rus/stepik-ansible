@@ -1,0 +1,6 @@
+---
+# defaults file for mysql-role
+db_name: testdb
+mysql_user_name: superhero86
+mysql_user_password: Pa$$w0rd
+repo: http://yum.mariadb.org/10.5/centos7-amd64/

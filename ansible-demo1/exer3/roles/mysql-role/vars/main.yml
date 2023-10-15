@@ -1,0 +1,11 @@
+---
+# vars file for mysql-role
+pre_packages:
+  - epel-release
+  - yum-utils
+  - python3
+  - MySQL-python
+mysql_packages:
+  - MariaDB-server
+  - MariaDB-client
+  - MySQL

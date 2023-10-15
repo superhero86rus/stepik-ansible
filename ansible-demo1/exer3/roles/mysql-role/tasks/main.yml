@@ -1,0 +1,28 @@
+---
+# tasks file for mysql-role
+    - name: Install PreReq Packages
+      yum: name="{{ pre_packages }}" state=present
+    
+    - name: Add Repository
+      yum_repository:
+        name: MariaDB
+        description: MariaDB Custom Repository
+        baseurl: "{{ repo }}"
+        gpgkey: https://supplychain.mariadb.com/MariaDB-Server-GPG-KEY
+        gpgcheck: yes
+        
+    - name: Install MySQL Packages
+      yum: name="{{ mysql_packages }}" state=present
+
+    - name: Start MySQL service
+      service: name=mariadb state=started
+
+    - name: Configure Database
+      mysql_db: name="{{ db_name }}" state=present
+    
+    - name: Create Database user
+      mysql_user:
+        name: "{{ mysql_user_name }}"
+        password: "{{ mysql_user_password }}"
+        priv: "{{ db_name }}.*:ALL"
+        state: present
