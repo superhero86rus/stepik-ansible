@@ -1,3 +1,4 @@
+---
 -
   name: Install and Configure MySQL (Maria DB)
   hosts: target3
@@ -50,6 +51,4 @@
         password: "{{ mysql_user_password }}"
         priv: "{{ db_name }}.*:ALL"
         state: present
-        
-
-        
+...
